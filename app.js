@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    showToast('Download wird vorbereitet...', 'info');
+    showToast('Download startet... (bitte kurz warten)', 'info');
 
     const cleanTitle = (currentItem?.title || 'tiktok_video')
       .replace(/[^\w\d_\-äöüÄÖÜß]/g, '_')
@@ -223,23 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ext = defaultFilename.substring(defaultFilename.lastIndexOf('.'));
     const finalFilename = `${cleanTitle}${ext}`;
 
-    // 1. When running on Web / Vercel Serverless: Route through /api/stream proxy
-    if (window.location.protocol.startsWith('http')) {
-      const streamUrl = `/api/stream?url=${encodeURIComponent(mediaUrl)}&name=${encodeURIComponent(finalFilename)}`;
-      
-      const link = document.createElement('a');
-      link.href = streamUrl;
-      link.setAttribute('download', finalFilename);
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => {
-        document.body.removeChild(link);
-      }, 500);
-      showToast('Download gestartet!', 'success');
-      return;
-    }
-
-    // 2. Direct Blob Download (if opened via file://)
+    // 1. Direct Blob Download in client browser (fast, saves file directly, zero serverless payload limit)
     try {
       const res = await fetch(mediaUrl);
       if (res.ok) {
@@ -253,16 +237,24 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           document.body.removeChild(link);
           URL.revokeObjectURL(blobUrl);
-        }, 1500);
-        showToast('Download gespeichert!', 'success');
+        }, 4000);
+        showToast('Download erfolgreich gespeichert!', 'success');
         return;
       }
     } catch (e) {
-      console.warn('Blob fetch restricted by CORS on file://, opening link', e);
+      console.warn('Direct blob fetch blocked by CORS, opening direct link...', e);
     }
 
-    // Fallback
-    window.open(mediaUrl, '_blank');
+    // 2. Direct browser link trigger fallback
+    const link = document.createElement('a');
+    link.href = mediaUrl;
+    link.target = '_blank';
+    link.setAttribute('download', finalFilename);
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      document.body.removeChild(link);
+    }, 500);
   }
 
   /**
