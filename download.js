@@ -4,6 +4,15 @@
  * Resolves TikTok video links to direct no-watermark MP4 streams & MP3 audio.
  */
 
+function timeoutSignal(ms) {
+  if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+    return AbortSignal.timeout(ms);
+  }
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), ms);
+  return controller.signal;
+}
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,7 +23,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { url } = req.query;
+  const { url } = req.query || {};
 
   if (!url) {
     return res.status(400).json({
@@ -79,7 +88,7 @@ async function resolveTikWM(tiktokUrl) {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         'Accept': 'application/json'
       },
-      signal: AbortSignal.timeout(6000)
+      signal: timeoutSignal(6000)
     });
 
     if (!response.ok) return null;
@@ -117,7 +126,7 @@ async function resolveTiklydown(tiktokUrl) {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
       },
-      signal: AbortSignal.timeout(6000)
+      signal: timeoutSignal(6000)
     });
 
     if (!response.ok) return null;
@@ -153,7 +162,7 @@ async function resolveSSSTik(tiktokUrl) {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
       },
-      signal: AbortSignal.timeout(5000)
+      signal: timeoutSignal(5000)
     });
 
     const homeHtml = await homeRes.text();
@@ -181,7 +190,7 @@ async function resolveSSSTik(tiktokUrl) {
         'HX-Current-URL': 'https://ssstik.io/en'
       },
       body: bodyParams.toString(),
-      signal: AbortSignal.timeout(7000)
+      signal: timeoutSignal(7000)
     });
 
     const postHtml = await postRes.text();

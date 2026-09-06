@@ -2,11 +2,13 @@
   "name": "tikflow-downloader",
   "version": "1.0.0",
   "description": "100% Free TikTok Video & MP3 Downloader without Watermark",
-  "main": "api/download.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.x"
   },
   "keywords": [
     "tiktok",

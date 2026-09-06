@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { url, name } = req.query;
+  const { url, name } = req.query || {};
 
   if (!url) {
     return res.status(400).send('Missing "url" query parameter.');
@@ -46,8 +46,16 @@ export default async function handler(req, res) {
     }
 
     if (upstream.body) {
-      const nodeStream = Readable.fromWeb(upstream.body);
-      nodeStream.pipe(res);
+      if (typeof Readable.fromWeb === 'function') {
+        try {
+          Readable.fromWeb(upstream.body).pipe(res);
+          return;
+        } catch (pipeErr) {
+          console.warn('Stream pipe failed, falling back to arrayBuffer:', pipeErr);
+        }
+      }
+      const arrayBuffer = await upstream.arrayBuffer();
+      res.end(Buffer.from(arrayBuffer));
     } else {
       res.end();
     }
