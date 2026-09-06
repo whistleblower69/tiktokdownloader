@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikFlow — Elite TikTok Video & MP3 Downloader</title>
+  <meta name="description" content="Kostenloser High-Speed TikTok Downloader ohne Wasserzeichen. Unterstützt Full HD MP4, MP3 Audio und Thumbnail Extraction.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Ambient Specular Light Beam -->
+  <div class="specular-beam"></div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <div class="logo-badge">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.38a6.34 6.34 0 0 0-.85-.06A6.33 6.33 0 0 0 3.1 15.65a6.34 6.34 0 0 0 10.82 4.48 6.27 6.27 0 0 0 1.9-4.46V8.75a8.18 8.18 0 0 0 4.77 1.5V6.8a4.86 4.86 0 0 1-1-.11z"/>
+          </svg>
+        </div>
+        <span class="logo-text">TIKFLOW<span class="logo-sub">.PRO</span></span>
+      </a>
+      
+      <div class="nav-stats">
+        <span class="nav-stat-pill"><span class="pulse-dot"></span> V2.6 ONLINE</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#anleitung">Anleitung</a>
+        <a href="#features">Features</a>
+        <a href="#history" id="nav-history-link">Verlauf <span class="history-count" id="history-counter">0</span></a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Hero Area -->
+  <main class="main-wrapper">
+    <div class="container hero-container">
+      
+      <!-- Status Badge -->
+      <div class="status-banner">
+        <span class="badge-tag">STATUS</span>
+        <span class="badge-divider">/</span>
+        <span class="badge-desc">MULTI-GATEWAY ACTIVE • ZERO WATERMARK BYPASS</span>
+      </div>
+
+      <h1 class="page-title">TikTok Downloader</h1>
+      <p class="page-subtitle">Videos ohne Wasserzeichen in nativer 1080p Qualität & MP3 Audio herunterladen.</p>
+
+      <!-- Input Card -->
+      <div class="search-panel">
+        <div class="search-box-border">
+          <div class="input-group">
+            <span class="input-prefix-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </span>
+            <input 
+              type="url" 
+              id="url-input" 
+              placeholder="TikTok Link hier einfügen... (oder Strg + V)" 
+              autocomplete="off" 
+              spellcheck="false"
+              required
+            >
+            <button type="button" class="btn-paste" id="btn-paste" title="Aus Zwischenablage einfügen">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              </svg>
+              <span>Einfügen</span>
+            </button>
+            <button type="button" class="btn-clear" id="btn-clear" style="display: none;" title="Feld leeren">✕</button>
+          </div>
+          <button type="button" class="btn-submit" id="btn-submit">
+            <span class="btn-text">Download</span>
+            <span class="btn-keybind">↵</span>
+            <div class="spinner" style="display: none;"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Hint & Shortcuts -->
+      <div class="meta-row">
+        <span class="meta-item">Unterstützt: <code>tiktok.com/@user/video/...</code>, <code>vm.tiktok.com</code>, <code>vt.tiktok.com</code></span>
+        <span class="meta-divider">•</span>
+        <span class="meta-item">Auto-Paste: <kbd>Strg</kbd>+<kbd>V</kbd></span>
+      </div>
+
+      <!-- AD SLOT 1 -->
+      <div class="ad-container" id="ad-slot-1">
+        <div class="ad-box">
+          <span class="ad-tag">[ ANZEIGE • 728x90 ]</span>
+          <div class="ad-content-demo">Werbeplatz (Header Banner)</div>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div class="result-box" id="result-card" style="display: none;">
+        <div class="result-inner-grid">
+          
+          <!-- Media Player / Preview -->
+          <div class="result-media-col">
+            <div class="media-container" id="media-container">
+              <img id="res-thumb" src="" alt="Video Vorschau" class="res-thumb-img">
+              <video id="res-video" class="res-video-player" controls preload="none" style="display: none;"></video>
+              <button type="button" class="btn-play-preview" id="btn-play-preview" title="Video direkt ansehen">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span>Vorschau</span>
+              </button>
+              <span class="duration-badge" id="res-duration">0:00</span>
+            </div>
+            
+            <!-- Quick Link Copy -->
+            <button type="button" class="btn-copy-link" id="btn-copy-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span id="copy-link-text">CDN Link kopieren</span>
+            </button>
+          </div>
+
+          <!-- Video Details & Actions -->
+          <div class="result-info-col">
+            <div class="creator-header">
+              <img id="res-avatar" src="" alt="Avatar" class="creator-avatar">
+              <div class="creator-meta">
+                <div class="creator-name-row">
+                  <h3 id="res-nickname" class="creator-name">Creator</h3>
+                  <span class="verified-icon" title="Verifiziert">✓</span>
+                </div>
+                <span id="res-username" class="creator-handle">@tiktok</span>
+              </div>
+            </div>
+
+            <p class="video-description" id="res-desc">Video Beschreibung</p>
+
+            <div class="action-list">
+              <!-- Primary Option -->
+              <button type="button" class="dl-btn dl-btn-primary" id="btn-dl-nowm">
+                <div class="dl-btn-left">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <div class="dl-btn-text">
+                    <strong>MP4 herunterladen</strong>
+                    <small>Ohne Wasserzeichen • Originalqualität</small>
+                  </div>
+                </div>
+                <span class="dl-badge badge-hd">1080p HD</span>
+              </button>
+
+              <!-- Secondary Option -->
+              <button type="button" class="dl-btn dl-btn-secondary" id="btn-dl-server2">
+                <div class="dl-btn-left">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                  <div class="dl-btn-text">
+                    <strong>Server 2 (Fast Mirror)</strong>
+                    <small>Alternativer Stream • Schneller Download</small>
+                  </div>
+                </div>
+                <span class="dl-badge">MIRROR</span>
+              </button>
+
+              <!-- Audio MP3 Option -->
+              <button type="button" class="dl-btn dl-btn-secondary" id="btn-dl-mp3">
+                <div class="dl-btn-left">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                  </svg>
+                  <div class="dl-btn-text">
+                    <strong>Audio (MP3) herunterladen</strong>
+                    <small>Original Sound & Musik extrahieren</small>
+                  </div>
+                </div>
+                <span class="dl-badge badge-audio">320 KBPS</span>
+              </button>
+
+              <!-- Cover Thumbnail Option -->
+              <button type="button" class="dl-btn dl-btn-subtle" id="btn-dl-cover">
+                <div class="dl-btn-left">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <div class="dl-btn-text">
+                    <strong>Cover-Bild (JPG)</strong>
+                    <small>Vorschaubild in voller Auflösung</small>
+                  </div>
+                </div>
+                <span class="dl-badge">JPG</span>
+              </button>
+            </div>
+
+            <button type="button" class="btn-reset-search" id="btn-reset">
+              ← Anderes Video herunterladen
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- AD SLOT 2 -->
+      <div class="ad-container" id="ad-slot-2" style="display: none;">
+        <div class="ad-box">
+          <span class="ad-tag">[ ANZEIGE • 300x250 ]</span>
+          <div class="ad-content-demo">Werbeplatz (Download Banner)</div>
+        </div>
+      </div>
+
+      <!-- Download History Section -->
+      <div class="history-panel" id="history-panel" style="display: none;">
+        <div class="history-header">
+          <span class="history-title">[ VERLAUF • ZULETZT GELADEN ]</span>
+          <button type="button" class="btn-clear-history" id="btn-clear-history">Verlauf leeren</button>
+        </div>
+        <div class="history-grid" id="history-grid"></div>
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- How-To Guide -->
+  <section class="info-section" id="anleitung">
+    <div class="container">
+      <div class="section-label">[ 01. ANLEITUNG ]</div>
+      <h2 class="section-heading">Schritt-für-Schritt Anleitung</h2>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3>Link kopieren</h3>
+            <p>Öffne die TikTok-App oder Website. Wähle das gewünschte Video aus, tippe auf <strong>Teilen</strong> und dann auf <strong>Link kopieren</strong>.</p>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3>Link einfügen</h3>
+            <p>Füge die Adresse mit dem <strong>Einfügen</strong>-Button ein oder drücke einfach <kbd>Strg</kbd>+<kbd>V</kbd>. Drücke anschließend auf <strong>Download</strong>.</p>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3>Format wählen & Speichern</h3>
+            <p>Wähle MP4 ohne Wasserzeichen oder MP3 Audio. Der Download startet direkt und speichert die Datei auf deinem Gerät.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specifications Grid -->
+  <section class="info-section bg-alt" id="features">
+    <div class="container">
+      <div class="section-label">[ 02. SPEZIFIKATIONEN ]</div>
+      <h2 class="section-heading">Core Engine Vorteile</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-header">
+            <span class="feature-bullet">■</span>
+            <h4>Zero Watermark Algorithmus</h4>
+          </div>
+          <p>Greift direkt auf den rohen ByteDance CDN-Videostream zu, bevor TikTok das Logo und die End-Cards einbrennt.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-header">
+            <span class="feature-bullet">■</span>
+            <h4>Lossless Audio Extraction</h4>
+          </div>
+          <p>Wandelt TikTok-Soundtracks in sauberes MP3-Audio um – perfekt für Remixe, Klingeltöne und Musiksammlungen.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-header">
+            <span class="feature-bullet">■</span>
+            <h4>Instant Browser Streaming</h4>
+          </div>
+          <p>Dank HTML5 Content-Disposition landet das Video direkt im Downloadordner, anstatt einen externen Player-Tab zu öffnen.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-header">
+            <span class="feature-bullet">■</span>
+            <h4>100% Serverless & Privat</h4>
+          </div>
+          <p>Keine Datenbank, keine Speicherung von Benutzerdaten oder Videos. Deine Downloads bleiben privat.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Accordion FAQ -->
+  <section class="info-section" id="faq">
+    <div class="container">
+      <div class="section-label">[ 03. FAQ ]</div>
+      <h2 class="section-heading">Häufig gestellte Fragen</h2>
+      <div class="faq-accordion">
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Kostet TikFlow wirklich nichts?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Ja, TikFlow ist dauerhaft zu 100% kostenlos. Du musst keine Konten erstellen, keine Abos abschließen und keine Bankdaten hinterlegen.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Wo finde ich die Datei nach dem Download?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Auf dem PC oder Android landet die Datei direkt in deinem Browser-Ordner „Downloads“. Auf dem iPhone (iOS Safari) findest du sie in der App „Dateien“ unter Downloads.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Werden meine heruntergeladenen Videos gespeichert?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Nein. Wir speichern keine Videos oder Suchanfragen auf Servern. Die Videodaten werden direkt über CDN-Streams an dein Endgerät übertragen.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger">
+            <span>Kann ich auch Slideshows / Fotoserien herunterladen?</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Ja, Bilder-Slideshows werden voll unterstützt und können entweder als gerendertes MP4-Video oder als einzelne Bilder gesichert werden.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <span class="footer-brand">TIKFLOW // CORE ENGINE</span>
+        <span class="footer-divider">/</span>
+        <span class="footer-disclaimer">Not affiliated with TikTok or ByteDance.</span>
+      </div>
+      <div class="footer-right">
+        <span>BUILD v2.6.0 • PITCH BLACK EDITION</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notice -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "tikflow-downloader",
+  "version": "1.0.0",
+  "description": "100% Free TikTok Video & MP3 Downloader without Watermark",
+  "main": "api/download.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "tiktok",
+    "downloader",
+    "no-watermark",
+    "mp3",
+    "serverless",
+    "vercel"
+  ],
+  "author": "Larpbase",
+  "license": "MIT"
+}
